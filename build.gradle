@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+}
+
+group 'me.kersan'
+version '0.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation 'com.1stleg:jnativehook:2.0.2'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'me.kersan.SpicyClicker',
+                'Class-Path': configurations.runtimeClasspath.collect { it.getName() }.join(' ')
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
