@@ -1,28 +1,25 @@
 package me.kersan.clicker;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.awt.*;
 import java.util.Random;
 
 public class Clicker {
 
     public final Robot robot;
-    private boolean doClick = false;
+
+    @Getter @Setter
+    private boolean clicking = false;
 
     public Clicker() {
         this.robot = getRobot();
     }
 
-    public void stopClicking() {
-        this.doClick = false;
-    }
-
     public void startClicking(ClickerType.ClickerTypes type, int minCPS, int maxCPS) {
-        this.doClick = true;
+        setClicking(true);
         new Thread(() -> click(type, minCPS, maxCPS)).start();
-    }
-
-    public boolean isClicking() {
-        return this.doClick;
     }
 
     private void click(ClickerType.ClickerTypes type, int minCPS, int maxCPS) {
@@ -31,13 +28,15 @@ public class Clicker {
         long lastTime = System.currentTimeMillis();
         long delay = getDelay(minCPS, maxCPS);
 
-        while (this.doClick) {
-            if (System.currentTimeMillis() - lastTime > delay) {
-                System.out.println(System.currentTimeMillis() - lastTime);
-                mouseDown(inputEvent);
-                delay = getDelay(minCPS, maxCPS);
-                lastTime = System.currentTimeMillis();
+        while (this.clicking) {
+            if (!(System.currentTimeMillis() - lastTime > delay)) {
+                continue;
             }
+
+            mouseDown(inputEvent);
+
+            delay = getDelay(minCPS, maxCPS);
+            lastTime = System.currentTimeMillis();
         }
     }
 

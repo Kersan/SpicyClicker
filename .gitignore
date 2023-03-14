@@ -30,3 +30,4 @@ gradlew.bat
 # IDE
 .idea
 .vscode
+/build/

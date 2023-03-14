@@ -1,6 +1,7 @@
 package me.kersan.gui;
 
 import me.kersan.Settings;
+import me.kersan.config.Config;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,9 +34,7 @@ public class ClickerGUI {
 
         panel.add(button);
 
-        button.addActionListener(e -> {
-            System.out.println("Button clicked!");
-        });
+        button.addActionListener(e -> Config.saveSettings(settings));
     }
 
     public void run() {

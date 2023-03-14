@@ -7,7 +7,7 @@ import org.jnativehook.keyboard.NativeKeyListener;
 
 public class ClickerKeyListener implements NativeKeyListener {
 
-    private Settings settings;
+    private final Settings settings;
     private final Clicker clicker;
 
     public ClickerKeyListener(Settings settings, Clicker detector) {
@@ -23,16 +23,12 @@ public class ClickerKeyListener implements NativeKeyListener {
     }
 
     private void handleClicker() {
-        System.out.println("Key was pressed " + this.clicker.isClicking());
-        if (!this.clicker.isClicking()) {
-            this.clicker.startClicking(
-                    settings.getMouseButton(),
-                    settings.getMinCPS(),
-                    settings.getMaxCPS()
-            );
-        } else {
-            this.clicker.stopClicking();
+        if (clicker.isClicking()) {
+            clicker.setClicking(false);
+            return;
         }
+
+        clicker.startClicking(settings.getMouseButton(), settings.getMinCPS(), settings.getMaxCPS());
     }
 
     @Override

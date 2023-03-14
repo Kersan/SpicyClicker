@@ -2,11 +2,9 @@ package me.kersan;
 
 import me.kersan.clicker.Clicker;
 import me.kersan.config.Config;
-import me.kersan.listener.ClickerKeyListener;
-import me.kersan.listener.ClickerMouseListener;
 import me.kersan.gui.ClickerGUI;
+import me.kersan.listener.Listener;
 import org.jnativehook.GlobalScreen;
-import org.jnativehook.NativeHookException;
 
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -19,21 +17,11 @@ public class SpicyClicker {
         Settings settings = new Settings();
         Clicker detector = new Clicker();
 
-        Config.loadDefault(settings);
-        registerListener(settings, detector);
+        Config.loadSettings(settings);
+        Listener.registerListener(settings, detector);
 
         ClickerGUI gui = new ClickerGUI(settings);
         gui.run();
-    }
-
-    private static void registerListener(Settings settings, Clicker detector) {
-        try {
-            GlobalScreen.registerNativeHook();
-            GlobalScreen.addNativeMouseListener(new ClickerMouseListener(settings, detector));
-            GlobalScreen.addNativeKeyListener(new ClickerKeyListener(settings, detector));
-        } catch (NativeHookException e) {
-            e.printStackTrace();
-        }
     }
 
     private static void manageLogging() {
