@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: me.kersan.SpicyClicker
-Class-Path: jnativehook-2.0.2.jar
-
