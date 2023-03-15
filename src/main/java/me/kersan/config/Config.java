@@ -13,13 +13,15 @@ public class Config {
 
         if (!ConfigFile.fileExists()) {
             ConfigDefault.loadDefault(settings);
+            Config.saveSettings(settings);
         }
 
         ConfigFile.loadFile(properties);
 
         settings.setMinCPS(Integer.parseInt(properties.getProperty("MinCPS")));
         settings.setMaxCPS(Integer.parseInt(properties.getProperty("MaxCPS")));
-        settings.setMouseButton(ClickerType.ClickerTypes.valueOf(properties.getProperty("MouseButton")));
+        settings.setBindKey(Integer.parseInt(properties.getProperty("BindKey")));
+        settings.setMouseButton(ClickerType.Mouse.valueOf(properties.getProperty("MouseButton")));
     }
 
     public static void saveSettings(Settings settings) {
@@ -28,6 +30,7 @@ public class Config {
 
         properties.setProperty("MinCPS", String.valueOf(settings.getMinCPS()));
         properties.setProperty("MaxCPS", String.valueOf(settings.getMaxCPS()));
+        properties.setProperty("BindKey", String.valueOf(settings.getBindKey()));
         properties.setProperty("MouseButton", String.valueOf(settings.getMouseButton()));
 
         String location = ConfigFile.getSettingsFileLocation();

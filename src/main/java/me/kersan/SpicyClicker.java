@@ -11,16 +11,18 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 public class SpicyClicker {
+
+    private static final Binding binding = new Binding();
+    private static final Clicker clicker = new Clicker();
+    private static final Settings settings = new Settings();
+
     public static void main(String[] args) {
         manageLogging();
 
-        Settings settings = new Settings();
-        Clicker detector = new Clicker();
-
         Config.loadSettings(settings);
-        Listener.registerListener(settings, detector);
+        Listener.registerListener(settings, clicker, binding);
 
-        ClickerGUI gui = new ClickerGUI(settings);
+        ClickerGUI gui = new ClickerGUI(settings, binding);
         gui.run();
     }
 

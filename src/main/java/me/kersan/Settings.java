@@ -6,8 +6,8 @@ import me.kersan.clicker.ClickerType;
 
 @Getter @Setter
 public class Settings {
-
     private int MinCPS;
     private int MaxCPS;
-    private ClickerType.ClickerTypes mouseButton;
+    private int bindKey;
+    private ClickerType.Mouse mouseButton;
 }

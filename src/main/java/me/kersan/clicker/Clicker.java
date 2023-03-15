@@ -17,12 +17,12 @@ public class Clicker {
         this.robot = getRobot();
     }
 
-    public void startClicking(ClickerType.ClickerTypes type, int minCPS, int maxCPS) {
+    public void startClicking(ClickerType.Mouse type, int minCPS, int maxCPS) {
         setClicking(true);
         new Thread(() -> click(type, minCPS, maxCPS)).start();
     }
 
-    private void click(ClickerType.ClickerTypes type, int minCPS, int maxCPS) {
+    private void click(ClickerType.Mouse type, int minCPS, int maxCPS) {
         int inputEvent = ClickerType.getClickerEvent(type);
 
         long lastTime = System.currentTimeMillis();
