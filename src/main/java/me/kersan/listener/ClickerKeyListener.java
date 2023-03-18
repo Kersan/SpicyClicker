@@ -3,6 +3,7 @@ package me.kersan.listener;
 import me.kersan.Binding;
 import me.kersan.clicker.Clicker;
 import me.kersan.Settings;
+import me.kersan.clicker.ClickerType;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
@@ -25,8 +26,25 @@ public class ClickerKeyListener implements NativeKeyListener {
             return;
         }
 
-        if (nativeKeyEvent.getKeyCode() == settings.getBindKey())
-            this.handleClicker();
+        if (nativeKeyEvent.getKeyCode() != settings.getBindKey())
+            return;
+
+        switch (settings.getMode()) {
+            case TOGGLE -> this.handleClickerToggle();
+            case HOLD -> this.handleClickerHold();
+            case PRESS -> this.handleClickerPress();
+        }
+    }
+
+    private void handleClickerPress() {
+        if (!clicker.isClicking() && !this.binding.isReady()) {
+            this.binding.setReady(true);
+            return;
+        }
+
+        this.clicker.setClicking(false);
+        this.binding.setReady(false);
+        this.binding.setBotReleased(false);
     }
 
     private void handleBinding(NativeKeyEvent event) {
@@ -35,17 +53,29 @@ public class ClickerKeyListener implements NativeKeyListener {
         binding.setListening(false);
     }
 
-    private void handleClicker() {
+    private void handleClickerToggle() {
         if (clicker.isClicking()) {
             clicker.setClicking(false);
             return;
         }
 
-        clicker.startClicking(settings.getMouseButton(), settings.getMinCPS(), settings.getMaxCPS());
+        clicker.startClicking(settings);
+    }
+
+    private void handleClickerHold() {
+        if (clicker.isClicking())
+            return;
+
+        clicker.startClicking(settings);
     }
 
     @Override
     public void nativeKeyReleased(NativeKeyEvent nativeKeyEvent) {
+        if (nativeKeyEvent.getKeyCode() != settings.getBindKey())
+            return;
+
+        if (settings.getMode() == ClickerType.Mode.HOLD)
+            clicker.setClicking(false);
 
     }
 

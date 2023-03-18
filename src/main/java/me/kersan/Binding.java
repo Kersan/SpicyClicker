@@ -13,6 +13,12 @@ public class Binding {
     @Getter @Setter
     private int key;
 
+    @Getter @Setter
+    private boolean ready = false;
+
+    @Getter @Setter
+    private boolean botReleased = false;
+
     public static String convertBindKey(int keyValue) {
         return NativeKeyEvent.getKeyText(keyValue);
     }

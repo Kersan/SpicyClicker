@@ -22,6 +22,7 @@ public class Config {
         settings.setMaxCPS(Integer.parseInt(properties.getProperty("MaxCPS")));
         settings.setBindKey(Integer.parseInt(properties.getProperty("BindKey")));
         settings.setMouseButton(ClickerType.Mouse.valueOf(properties.getProperty("MouseButton")));
+        settings.setMode(ClickerType.Mode.valueOf(properties.getProperty("Mode")));
     }
 
     public static void saveSettings(Settings settings) {
@@ -32,6 +33,7 @@ public class Config {
         properties.setProperty("MaxCPS", String.valueOf(settings.getMaxCPS()));
         properties.setProperty("BindKey", String.valueOf(settings.getBindKey()));
         properties.setProperty("MouseButton", String.valueOf(settings.getMouseButton()));
+        properties.setProperty("Mode", String.valueOf(settings.getMode()));
 
         String location = ConfigFile.getSettingsFileLocation();
         ConfigFile.addToFile(properties, ConfigFile.getFile(location));

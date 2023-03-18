@@ -2,6 +2,8 @@ package me.kersan.clicker;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.kersan.Binding;
+import me.kersan.Settings;
 
 import java.awt.*;
 import java.util.Random;
@@ -9,17 +11,23 @@ import java.util.Random;
 public class Clicker {
 
     public final Robot robot;
+    private final Binding binding;
 
     @Getter @Setter
     private boolean clicking = false;
 
-    public Clicker() {
+    public Clicker(Binding binding) {
         this.robot = getRobot();
+        this.binding = binding;
     }
 
-    public void startClicking(ClickerType.Mouse type, int minCPS, int maxCPS) {
+    public void startClicking(Settings settings) {
         setClicking(true);
-        new Thread(() -> click(type, minCPS, maxCPS)).start();
+        new Thread(() -> click(
+                settings.getMouseButton(),
+                settings.getMinCPS(),
+                settings.getMaxCPS()
+        )).start();
     }
 
     private void click(ClickerType.Mouse type, int minCPS, int maxCPS) {
@@ -32,12 +40,13 @@ public class Clicker {
             if (!(System.currentTimeMillis() - lastTime > delay)) {
                 continue;
             }
-
             mouseDown(inputEvent);
 
             delay = getDelay(minCPS, maxCPS);
             lastTime = System.currentTimeMillis();
         }
+
+        binding.setBotReleased(false);
     }
 
     private long getDelay(int minCPS, int maxCPS) {
@@ -47,6 +56,7 @@ public class Clicker {
     }
 
     private void mouseDown(int button) {
+        binding.setBotReleased(true);
         robot.mousePress(button);
         robot.mouseRelease(button);
     }

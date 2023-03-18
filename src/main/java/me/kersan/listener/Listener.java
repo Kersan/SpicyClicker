@@ -8,11 +8,11 @@ import org.jnativehook.NativeHookException;
 
 public class Listener {
 
-    public static void registerListener(Settings settings, Clicker detector, Binding binding) {
+    public static void registerListener(Settings settings, Clicker clicker, Binding binding) {
         try {
             GlobalScreen.registerNativeHook();
-            GlobalScreen.addNativeMouseListener(new ClickerMouseListener(settings, detector));
-            GlobalScreen.addNativeKeyListener(new ClickerKeyListener(settings, detector, binding));
+            GlobalScreen.addNativeMouseListener(new ClickerMouseListener(settings, clicker, binding));
+            GlobalScreen.addNativeKeyListener(new ClickerKeyListener(settings, clicker, binding));
         } catch (NativeHookException e) {
             e.printStackTrace();
         }

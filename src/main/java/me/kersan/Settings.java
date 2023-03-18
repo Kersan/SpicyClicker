@@ -10,4 +10,5 @@ public class Settings {
     private int MaxCPS;
     private int bindKey;
     private ClickerType.Mouse mouseButton;
+    private ClickerType.Mode mode;
 }

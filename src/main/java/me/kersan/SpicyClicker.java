@@ -12,12 +12,12 @@ import java.util.logging.Logger;
 
 public class SpicyClicker {
 
-    private static final Binding binding = new Binding();
-    private static final Clicker clicker = new Clicker();
-    private static final Settings settings = new Settings();
-
     public static void main(String[] args) {
         manageLogging();
+
+        Binding binding = new Binding();
+        Settings settings = new Settings();
+        Clicker clicker = new Clicker(binding);
 
         Config.loadSettings(settings);
         Listener.registerListener(settings, clicker, binding);
