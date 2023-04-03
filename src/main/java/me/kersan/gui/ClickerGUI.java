@@ -3,7 +3,7 @@ package me.kersan.gui;
 import me.kersan.Binding;
 import me.kersan.Settings;
 import me.kersan.clicker.ClickerType;
-import me.kersan.config.Config;
+import me.kersan.config.ConfigManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,7 +68,7 @@ public class ClickerGUI {
 
     private void createSaveButton(JPanel panel) {
         JButton saveButton = new JButton("Save");
-        saveButton.addActionListener(e -> Config.saveSettings(settings));
+        saveButton.addActionListener(e -> ConfigManager.saveSettings(settings));
         panel.add(saveButton);
     }
 

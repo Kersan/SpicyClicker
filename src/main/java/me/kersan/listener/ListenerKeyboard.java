@@ -7,27 +7,25 @@ import me.kersan.clicker.ClickerType;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
-public class ClickerKeyListener implements NativeKeyListener {
+public class ListenerKeyboard implements NativeKeyListener {
 
     private final Settings settings;
     private final Clicker clicker;
     private final Binding binding;
 
-    public ClickerKeyListener(Settings settings, Clicker detector, Binding binding) {
+    public ListenerKeyboard(Settings settings, Clicker clicker, Binding binding) {
         this.settings = settings;
-        this.clicker = detector;
+        this.clicker = clicker;
         this.binding = binding;
     }
 
     @Override
     public void nativeKeyPressed(NativeKeyEvent nativeKeyEvent) {
-        if (this.binding.isListening()) {
+        if (this.binding.isListening())
             this.handleBinding(nativeKeyEvent);
-            return;
-        }
 
-        if (nativeKeyEvent.getKeyCode() != settings.getBindKey())
-            return;
+        if (nativeKeyEvent.getKeyCode() != settings.getBindKey()
+                || this.binding.isListening()) return;
 
         switch (settings.getMode()) {
             case TOGGLE -> this.handleClickerToggle();
@@ -63,8 +61,7 @@ public class ClickerKeyListener implements NativeKeyListener {
     }
 
     private void handleClickerHold() {
-        if (clicker.isClicking())
-            return;
+        if (clicker.isClicking()) return;
 
         clicker.startClicking(settings);
     }
@@ -76,11 +73,8 @@ public class ClickerKeyListener implements NativeKeyListener {
 
         if (settings.getMode() == ClickerType.Mode.HOLD)
             clicker.setClicking(false);
-
     }
 
     @Override
-    public void nativeKeyTyped(NativeKeyEvent nativeKeyEvent) {
-
-    }
+    public void nativeKeyTyped(NativeKeyEvent nativeKeyEvent) {}
 }

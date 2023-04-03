@@ -32,9 +32,9 @@ public class Clicker {
 
     private void click(ClickerType.Mouse type, int minCPS, int maxCPS) {
         int inputEvent = ClickerType.getClickerEvent(type);
-
         long lastTime = System.currentTimeMillis();
-        long delay = getDelay(minCPS, maxCPS);
+
+        long delay = 0;
 
         while (this.clicking) {
             if (!(System.currentTimeMillis() - lastTime > delay)) {

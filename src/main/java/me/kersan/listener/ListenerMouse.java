@@ -7,13 +7,13 @@ import me.kersan.clicker.ClickerType;
 import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseListener;
 
-public class ClickerMouseListener implements NativeMouseListener {
+public class ListenerMouse implements NativeMouseListener {
 
     private final Settings settings;
     private final Clicker clicker;
     private final Binding binding;
 
-    public ClickerMouseListener(Settings settings, Clicker clicker, Binding binding) {
+    public ListenerMouse(Settings settings, Clicker clicker, Binding binding) {
         this.clicker = clicker;
         this.binding = binding;
         this.settings = settings;
@@ -27,24 +27,14 @@ public class ClickerMouseListener implements NativeMouseListener {
         int testVal = settings.getMouseButton().ordinal() + 1;
         System.out.println("Down: " + nativeMouseEvent.getButton() + " " + testVal);
 
-        if (settings.getMode() != ClickerType.Mode.PRESS)
+        if (binding.isListening()
+                || binding.isBotReleased()
+                || !binding.isReady()
+                || settings.getMode() != ClickerType.Mode.PRESS)
             return;
-
-        if (binding.isListening()) {
-            return;
-        }
-
-        if (this.binding.isBotReleased()) {
-            return;
-        }
-
-        if (!binding.isReady()) {
-            return;
-        }
 
         if (nativeMouseEvent.getButton() == testVal)
             this.handleClickerPress();
-
     }
 
     private void handleClickerPress() {
@@ -63,9 +53,8 @@ public class ClickerMouseListener implements NativeMouseListener {
         if (!clicker.isClicking())
             return;
 
-        if (!binding.isBotReleased() && nativeMouseEvent.getButton() == testVal) {
+        if (!binding.isBotReleased() && nativeMouseEvent.getButton() == testVal)
             clicker.setClicking(false);
-        }
 
         binding.setBotReleased(false);
     }

@@ -3,7 +3,7 @@ package me.kersan.config;
 import java.io.*;
 import java.util.Properties;
 
-public class ConfigFile {
+public class ConfigFileHandler {
 
     static final String CONFIG_FOLDER_NAME = "SpicyClicker";
     static final String CONFIG_FILE_NAME = "settings.properties";

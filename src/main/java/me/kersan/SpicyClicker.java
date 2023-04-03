@@ -1,9 +1,9 @@
 package me.kersan;
 
 import me.kersan.clicker.Clicker;
-import me.kersan.config.Config;
+import me.kersan.config.ConfigManager;
 import me.kersan.gui.ClickerGUI;
-import me.kersan.listener.Listener;
+import me.kersan.listener.ListenerManager;
 import org.jnativehook.GlobalScreen;
 
 import java.util.logging.Level;
@@ -19,8 +19,8 @@ public class SpicyClicker {
         Settings settings = new Settings();
         Clicker clicker = new Clicker(binding);
 
-        Config.loadSettings(settings);
-        Listener.registerListener(settings, clicker, binding);
+        ConfigManager.loadSettings(settings);
+        ListenerManager.registerListener(settings, clicker, binding);
 
         ClickerGUI gui = new ClickerGUI(settings, binding);
         gui.run();

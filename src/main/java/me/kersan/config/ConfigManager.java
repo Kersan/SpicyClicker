@@ -5,18 +5,18 @@ import me.kersan.clicker.ClickerType;
 
 import java.util.Properties;
 
-public class Config {
+public class ConfigManager {
 
     public static void loadSettings(Settings settings) {
-        ConfigFile.locationCheck();
+        ConfigFileHandler.locationCheck();
         Properties properties = new Properties();
 
-        if (!ConfigFile.fileExists()) {
+        if (!ConfigFileHandler.fileExists()) {
             ConfigDefault.loadDefault(settings);
-            Config.saveSettings(settings);
+            ConfigManager.saveSettings(settings);
         }
 
-        ConfigFile.loadFile(properties);
+        ConfigFileHandler.loadFile(properties);
 
         settings.setMinCPS(Integer.parseInt(properties.getProperty("MinCPS")));
         settings.setMaxCPS(Integer.parseInt(properties.getProperty("MaxCPS")));
@@ -26,7 +26,7 @@ public class Config {
     }
 
     public static void saveSettings(Settings settings) {
-        ConfigFile.locationCheck();
+        ConfigFileHandler.locationCheck();
         Properties properties = new Properties();
 
         properties.setProperty("MinCPS", String.valueOf(settings.getMinCPS()));
@@ -35,7 +35,7 @@ public class Config {
         properties.setProperty("MouseButton", String.valueOf(settings.getMouseButton()));
         properties.setProperty("Mode", String.valueOf(settings.getMode()));
 
-        String location = ConfigFile.getSettingsFileLocation();
-        ConfigFile.addToFile(properties, ConfigFile.getFile(location));
+        String location = ConfigFileHandler.getSettingsFileLocation();
+        ConfigFileHandler.addToFile(properties, ConfigFileHandler.getFile(location));
     }
 }
